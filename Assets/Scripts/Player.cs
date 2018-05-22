@@ -9,8 +9,9 @@ public class Player : MonoBehaviour
     public int playerId = 1;
     public List<Phase> phases = new List<Phase>();
     public Phase currentPhase = Phase.WAITING;
-    private int phaseIndex = 0;
+    public int phaseIndex = 0;
     private Dictionary<int, Worker> workers = new Dictionary<int, Worker>();
+    private int workersPlaced = 0;
 
     // Use this for initialization
     void Start()
@@ -32,17 +33,38 @@ public class Player : MonoBehaviour
 
     private void InitializeTurn(object sender, TurnManager.TurnEventArgs args)
     {
-        if (args.player == playerId)
+        if (args.player == playerId && args.turnNumber != 0)
         {
             currentPhase = phases[phaseIndex];
         }
     }
 
-    public void MoveBuilder(int workerId, Coordinate coordinate)
+    public void PlaceBuilder(int workerId, Coordinate coordinate)
     {
-        if (CanMove(coordinate))
+
+        if (CanPlace(workerId, coordinate))
         {
             Worker worker = workers[workerId];
+
+            MapManager.instance.MoveWorker(worker, coordinate);
+            worker.currentCoordinate = coordinate;
+
+            workersPlaced++;
+
+            if (workersPlaced == workers.Count)
+            {
+                TurnManager.instance.EndTurn();
+            }
+
+        }
+    }
+
+    public void MoveBuilder(int workerId, Coordinate coordinate)
+    {
+        if (CanMove(workerId, coordinate))
+        {
+            Worker worker = workers[workerId];
+
             MapManager.instance.MoveWorker(worker, coordinate);
             worker.currentCoordinate = coordinate;
 
@@ -52,7 +74,7 @@ public class Player : MonoBehaviour
 
     public void PlaceBuilding(int workerId, Coordinate coordinate)
     {
-        if (CanBuild(coordinate))
+        if (CanBuild(workerId, coordinate))
         {
             MapManager.instance.PlaceBuilding(coordinate);
 
@@ -62,22 +84,28 @@ public class Player : MonoBehaviour
         }
     }
 
-    public bool CanMove(Coordinate coordinate)
+    public bool CanPlace(int workerId, Coordinate coordinate)
     {
-        Debug.Log(MapManager.instance.isEmpty(coordinate));
-        Debug.Log(currentPhase.Equals(Phase.MOVE));
-        return MapManager.instance.isEmpty(coordinate) && currentPhase.Equals(Phase.MOVE);
+        Worker worker = workers[workerId];
+        return MapManager.instance.isEmpty(coordinate) && worker.currentCoordinate == null;
     }
 
-    public bool CanBuild(Coordinate coordinate)
+    public bool CanMove(int workerId, Coordinate coordinate)
     {
-        return MapManager.instance.CanBuild(coordinate) && currentPhase.Equals(Phase.BUILD);
+        Worker worker = workers[workerId];
+        return worker.currentCoordinate.IsAdjacent(coordinate) && MapManager.instance.isEmpty(coordinate) && currentPhase.Equals(Phase.MOVE);
+    }
+
+    public bool CanBuild(int workerId, Coordinate coordinate)
+    {
+        Worker worker = workers[workerId];
+        return worker.currentCoordinate.IsAdjacent(coordinate) && MapManager.instance.CanBuild(coordinate) && currentPhase.Equals(Phase.BUILD);
     }
 
     private void IncrementPhase()
     {
         phaseIndex++;
-        if (phases.Count <= phaseIndex)
+        if (phases.Count > phaseIndex)
         {
             currentPhase = phases[phaseIndex];
         }

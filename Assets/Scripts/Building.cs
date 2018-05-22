@@ -1,5 +1,6 @@
 public enum Building
 {
+    NONE,
     ONE,
     TWO,
     THREE,
@@ -14,15 +15,15 @@ static class BuildingUtils
 
         if (building == Building.ONE)
         {
-            building = Building.TWO;
+            nextBuilding = Building.TWO;
         }
         else if (building == Building.TWO)
         {
-            building = Building.THREE;
+            nextBuilding = Building.THREE;
         }
         else
         {
-            building = Building.ROOF;
+            nextBuilding = Building.ROOF;
         }
 
         return nextBuilding;

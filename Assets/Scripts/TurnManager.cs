@@ -7,9 +7,8 @@ public class TurnManager : MonoBehaviour
 {
     public static TurnManager instance = null;
     private Queue<int> playerQueue;
-    private Queue<int> finishedQueue;
-    private int currentPlayer;
-    private int turnNumber;
+    public int currentPlayer;
+    public int turnNumber;
     public event EventHandler<TurnEventArgs> OnTurnStart;
     public event EventHandler<TurnEventArgs> OnTurnEnd;
 
@@ -44,6 +43,9 @@ public class TurnManager : MonoBehaviour
     void Start()
     {
         playerQueue = new Queue<int>();
+
+        playerQueue.Enqueue(1);
+        playerQueue.Enqueue(2);
     }
 
     // Update is called once per frame
@@ -55,31 +57,34 @@ public class TurnManager : MonoBehaviour
     public void StartTurns()
     {
         turnNumber = 0;
+        currentPlayer = playerQueue.Dequeue();
         OnTurnStart(this, new TurnEventArgs(0, currentPlayer));
     }
 
     public void EndTurn()
     {
+        Debug.Log(currentPlayer + ": Ending turn");
+
+        // OnTurnEnd(this, new TurnEventArgs(turnNumber, currentPlayer));
+
+        MoveToNextPlayer(currentPlayer);
+
         if (playerQueue.Count == 0)
         {
             turnNumber++;
-            foreach (int player in finishedQueue)
-            {
-                playerQueue.Enqueue(finishedQueue.Dequeue());
-            }
+            playerQueue.Enqueue(1);
+            playerQueue.Enqueue(2);
         }
-
-        OnTurnEnd(this, new TurnEventArgs(turnNumber, currentPlayer));
-
-        MoveToNextPlayer(currentPlayer);
 
         OnTurnStart(this, new TurnEventArgs(turnNumber, currentPlayer));
     }
 
     public void MoveToNextPlayer(int lastPlayer)
     {
-        currentPlayer = playerQueue.Dequeue();
+        if (playerQueue.Count > 0)
+        {
+            currentPlayer = playerQueue.Dequeue();
 
-        finishedQueue.Enqueue(lastPlayer);
+        }
     }
 }

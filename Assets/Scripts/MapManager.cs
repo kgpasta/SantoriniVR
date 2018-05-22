@@ -30,11 +30,11 @@ public class MapManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        for (int x = 0; x < 5; x++)
+        for (int i = 0; i < 5; i++)
         {
-            for (int y = 0; y < 5; y++)
+            for (int j = 0; j < 5; j++)
             {
-                workerMap.Add(new Coordinate(x, y), null);
+                buildingMap.Add(new Coordinate(i, j), Building.NONE);
             }
         }
     }
@@ -47,19 +47,19 @@ public class MapManager : MonoBehaviour
 
     public Boolean isEmpty(Coordinate coordinate)
     {
-        return workerMap.ContainsKey(coordinate) && workerMap[coordinate] == null;
+        return !workerMap.ContainsKey(coordinate);
     }
 
     public void MoveWorker(Worker worker, Coordinate coordinate)
     {
-        workerMap[worker.currentCoordinate] = null;
+        workerMap.Remove(coordinate);
 
         workerMap[coordinate] = worker;
     }
 
     public void PlaceBuilding(Coordinate coordinate)
     {
-        if (buildingMap[coordinate] == null)
+        if (buildingMap[coordinate] == Building.NONE)
         {
             buildingMap[coordinate] = Building.ONE;
         }
