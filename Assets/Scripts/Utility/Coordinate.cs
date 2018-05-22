@@ -13,4 +13,9 @@ public class Coordinate
     {
         return x ^ y;
     }
+
+    public override string ToString()
+    {
+        return string.Format("({0} , {1})", this.x, this.y);
+    }
 }

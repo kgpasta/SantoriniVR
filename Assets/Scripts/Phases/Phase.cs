@@ -1,4 +1,6 @@
-public interface Phase
+public enum Phase
 {
-
+    MOVE,
+    BUILD,
+    WAITING
 }

@@ -27,15 +27,30 @@ public class InputManager : MonoBehaviour
         Debug.Log("workerId: " + workerId);
 
         Coordinate coordinate = new Coordinate(Int32.Parse(commands[2]), Int32.Parse(commands[3]));
-        Debug.Log("coordinate: " + coordinate.x + ", " + coordinate.y);
+        Debug.Log("coordinate: " + coordinate);
 
         if (commands[0].ToLower() == "move")
         {
-            player.MoveBuilder(workerId, coordinate);
+            if (player.CanMove(coordinate))
+            {
+                player.MoveBuilder(workerId, coordinate);
+
+            }
+            else
+            {
+                Debug.LogError("cannot move builder to: " + coordinate);
+            }
         }
         else if (commands[1].ToLower() == "build")
         {
-            player.PlaceBuilding(workerId, coordinate);
+            if (player.CanBuild(coordinate))
+            {
+                player.PlaceBuilding(workerId, coordinate);
+            }
+            else
+            {
+                Debug.LogError("cannot build at: " + coordinate);
+            }
         }
     }
 }
