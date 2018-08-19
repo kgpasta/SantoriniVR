@@ -119,6 +119,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MapTileButtonPrefabReference: {fileID: 1812222849743928, guid: e2780eb7516c2f54888ca4dc3d9418b6,
     type: 2}
+  MapTiles: []
 --- !u!223 &223641287027568274
 Canvas:
   m_ObjectHideFlags: 1
@@ -163,14 +164,14 @@ RectTransform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1457362421204444}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 1}
   m_Children:
   - {fileID: 224292462717933512}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
