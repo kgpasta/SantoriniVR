@@ -315,14 +315,16 @@ MonoBehaviour:
   phases: 
   currentPhase: 2
   phaseIndex: 0
+  WorkerModelPrefabReference: {fileID: 1845344804078004, guid: 1b34b46e646686846b15631eff9a1d8a,
+    type: 2}
 --- !u!4 &666647140
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 666647138}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.794284, y: 0.58784676, z: 0.56399536}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1019196821}
@@ -560,14 +562,16 @@ MonoBehaviour:
   phases: 
   currentPhase: 2
   phaseIndex: 0
+  WorkerModelPrefabReference: {fileID: 1845344804078004, guid: 1b34b46e646686846b15631eff9a1d8a,
+    type: 2}
 --- !u!4 &1790747010
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1790747008}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.794284, y: 0.58784676, z: 0.56399536}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1019196821}

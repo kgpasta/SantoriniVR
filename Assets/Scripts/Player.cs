@@ -5,11 +5,15 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-
+    [Header("Player Properties")]
     public int playerId = 1;
     public List<Phase> phases = new List<Phase>();
     public Phase currentPhase = Phase.WAITING;
     public int phaseIndex = 0;
+
+    [Header("Model Prefab References")]
+    public GameObject WorkerModelPrefabReference = null;
+
     private Dictionary<int, Worker> workers = new Dictionary<int, Worker>();
     private int workersPlaced = 0;
 
@@ -21,8 +25,8 @@ public class Player : MonoBehaviour
         phases.Add(Phase.MOVE);
         phases.Add(Phase.BUILD);
 
-        workers.Add(1, new Worker());
-        workers.Add(2, new Worker());
+        workers.Add(1, new Worker(WorkerModelPrefabReference, playerId, transform));
+        workers.Add(2, new Worker(WorkerModelPrefabReference, playerId, transform));
     }
 
     // Update is called once per frame
