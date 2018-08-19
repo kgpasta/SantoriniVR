@@ -14,7 +14,10 @@ public class Worker
         set {
             m_CurrentCoordinate = value;
             m_WorkerModel.transform.position = new Vector3(value.x - 3, 0.25f, -value.y + 3);
-            if (!m_WorkerModel.activeSelf) m_WorkerModel.SetActive(true);
+            if (!m_WorkerModel.activeSelf)
+            {
+                m_WorkerModel.SetActive(true);
+            }
         }
     }
 
