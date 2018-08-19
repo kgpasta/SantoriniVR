@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class MapManager : MonoBehaviour
 {
+    public MapGrid MapGrid = null;
+
     public static MapManager instance = null;
 
     private Dictionary<Coordinate, Worker> workerMap = new Dictionary<Coordinate, Worker>();
@@ -35,6 +37,7 @@ public class MapManager : MonoBehaviour
             for (int j = 0; j < 5; j++)
             {
                 buildingMap.Add(new Coordinate(i, j), Building.NONE);
+                MapGrid.AddMapTile(new Coordinate(i, j));
             }
         }
     }
