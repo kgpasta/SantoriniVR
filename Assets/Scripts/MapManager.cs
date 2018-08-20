@@ -12,6 +12,8 @@ public class MapManager : MonoBehaviour
     private Dictionary<Coordinate, Worker> workerMap = new Dictionary<Coordinate, Worker>();
     private Dictionary<Coordinate, Building?> buildingMap = new Dictionary<Coordinate, Building?>();
 
+    private const int MAP_DIMENSION = 5;
+
     //Awake is always called before any Start functions
     void Awake()
     {
@@ -32,9 +34,9 @@ public class MapManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < MAP_DIMENSION; i++)
         {
-            for (int j = 0; j < 5; j++)
+            for (int j = 0; j < MAP_DIMENSION; j++)
             {
                 buildingMap.Add(new Coordinate(i, j), Building.NONE);
                 MapGrid.AddMapTile(new Coordinate(i, j));
@@ -76,5 +78,4 @@ public class MapManager : MonoBehaviour
     {
         return buildingMap[coordinate] != Building.ROOF;
     }
-
 }

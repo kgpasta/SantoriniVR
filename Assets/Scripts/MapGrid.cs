@@ -5,7 +5,7 @@ using UnityEngine;
 public class MapGrid : MonoBehaviour {
 
     public GameObject MapTileButtonPrefabReference = null;
-    public List<MapTileButton> MapTiles = new List<MapTileButton>();
+    public Dictionary<Coordinate, MapTileButton> MapTiles = new Dictionary<Coordinate, MapTileButton>();
 
     public void AddMapTile(Coordinate coordinate)
     {
@@ -24,6 +24,6 @@ public class MapGrid : MonoBehaviour {
         mapTileRectTransform.localRotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
         mapTileRectTransform.localScale = new Vector3(1f, 1f, 1f);
 
-        MapTiles.Add(mapTile.GetComponent<MapTileButton>());
+        MapTiles.Add(coordinate, mapTile.GetComponent<MapTileButton>());
     }
 }
