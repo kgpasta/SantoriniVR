@@ -30,6 +30,8 @@ public class Coordinate
 
     public bool IsAdjacent(Coordinate coord)
     {
-        return Math.Abs(this.x - coord.x) + Math.Abs(this.y - coord.y) == 1;
+        bool nextTo = Math.Abs(this.x - coord.x) + Math.Abs(this.y - coord.y) == 1;
+        bool diagonal = Math.Abs(this.x - coord.x) == 1 && Math.Abs(this.y - coord.y) == 1;
+        return nextTo || diagonal;
     }
 }
