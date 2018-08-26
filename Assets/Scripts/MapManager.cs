@@ -55,6 +55,16 @@ public class MapManager : MonoBehaviour
         return !workerMap.ContainsKey(coordinate);
     }
 
+    public int GetWorker(Coordinate coordinate)
+    {
+        if (workerMap.ContainsKey(coordinate))
+        {
+            return workerMap[coordinate].workerId;
+        }
+
+        return 0;
+    }
+
     public void MoveWorker(Worker worker, Coordinate coordinate)
     {
         workerMap.Remove(coordinate);
@@ -80,5 +90,10 @@ public class MapManager : MonoBehaviour
     public Boolean CanBuild(Coordinate coordinate)
     {
         return buildingMap[coordinate] != Building.ROOF;
+    }
+
+    public Boolean CanSelect(int playerId, Coordinate coordinate)
+    {
+        return !isEmpty(coordinate) && workerMap[coordinate].playerId == playerId;
     }
 }

@@ -7,6 +7,8 @@ public class Worker
 {
     public int workerId { get; set; }
 
+    public int playerId { get; set; }
+
     private Coordinate m_CurrentCoordinate;
     public Coordinate currentCoordinate
     {
@@ -40,6 +42,7 @@ public class Worker
 
     public Worker(GameObject modelPrefab, int playerId, Transform parentTransform)
     {
+        this.playerId = playerId;
         m_WorkerModel = GameObject.Instantiate(modelPrefab);
         m_WorkerModel.transform.SetParent(parentTransform);
         m_WorkerModel.name = "Worker";
