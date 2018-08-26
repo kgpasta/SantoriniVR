@@ -39,7 +39,7 @@ public class MapManager : MonoBehaviour
             for (int j = 0; j < MAP_DIMENSION; j++)
             {
                 buildingMap.Add(new Coordinate(i, j), Building.NONE);
-                MapGrid.AddMapTile(new Coordinate(i, j));
+                MapGrid.AddMapTile(new Coordinate(j, i));
             }
         }
     }
@@ -71,7 +71,9 @@ public class MapManager : MonoBehaviour
         }
         else
         {
-            buildingMap[coordinate] = BuildingUtils.NextBuilding(buildingMap[coordinate]);
+            Building nextBuilding = BuildingUtils.NextBuilding(buildingMap[coordinate]);
+            buildingMap[coordinate] = nextBuilding;
+            MapGrid.MapTiles[coordinate].currentBuilding = nextBuilding;
         }
     }
 

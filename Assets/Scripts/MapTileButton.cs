@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapTileButton : MonoBehaviour {
+public class MapTileButton : MonoBehaviour
+{
 
     public Coordinate coordinate { get; set; }
 
@@ -55,17 +56,16 @@ public class MapTileButton : MonoBehaviour {
         GameObject buildingCube = GameObject.CreatePrimitive(PrimitiveType.Cube);
         buildingCube.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
         buildingCube.transform.SetParent(transform);
-        buildingCube.transform.localPosition = new Vector3(0f, buildingToYPosition[m_CurrentBuilding], 0f);
+        buildingCube.transform.localPosition = new Vector3(0f, 0f, -buildingToYPosition[m_CurrentBuilding]);
     }
 
     private void CreateBuildingDome()
     {
         GameObject buildingDome = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         buildingDome.transform.localScale = new Vector3(0.25f, 0f, 0f);
-        buildingDome.transform.localPosition = new Vector3(0f, buildingToYPosition[m_CurrentBuilding], 0f);
-        buildingDome.GetComponent<Renderer>().material.color = Color.blue;
-
         buildingDome.transform.SetParent(transform);
+        buildingDome.transform.localPosition = new Vector3(0f, 0f, -buildingToYPosition[m_CurrentBuilding]);
+        buildingDome.GetComponent<Renderer>().material.color = Color.blue;
     }
 
 }

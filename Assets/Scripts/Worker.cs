@@ -11,7 +11,8 @@ public class Worker
     public Coordinate currentCoordinate
     {
         get { return m_CurrentCoordinate; }
-        set {
+        set
+        {
             m_CurrentCoordinate = value;
             m_WorkerModel.transform.position = new Vector3(value.x - 2, 0.25f, -value.y + 2);
             if (!m_WorkerModel.activeSelf)
