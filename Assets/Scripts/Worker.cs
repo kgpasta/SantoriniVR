@@ -24,6 +24,17 @@ public class Worker
         }
     }
 
+    private bool m_IsSelected;
+    public bool IsSelected
+    {
+        get { return m_IsSelected; }
+        set
+        {
+            m_IsSelected = value;
+            ToggleOutlineShader(m_IsSelected);
+        }
+    }
+
     private GameObject m_WorkerModel;
     public GameObject workerModel
     {
@@ -48,5 +59,18 @@ public class Worker
         m_WorkerModel.name = "Worker";
 
         m_WorkerModel.GetComponent<Renderer>().material.color = playerIdToColor[playerId];
+    }
+
+    private void ToggleOutlineShader(bool toggle)
+    {
+        // show outline/border if selected
+        if (toggle)
+        {
+            m_WorkerModel.GetComponent<Renderer>().material.shader = Shader.Find("Custom/Outline");
+        }
+        else
+        {
+            m_WorkerModel.GetComponent<Renderer>().material.shader = Shader.Find("Standard");
+        }
     }
 }

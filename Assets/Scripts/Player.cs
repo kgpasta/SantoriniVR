@@ -69,9 +69,8 @@ public class Player : MonoBehaviour
     {
         if (CanSelect())
         {
-
             currentSelectedWorkerId = workerId;
-
+            workers[currentSelectedWorkerId].IsSelected = true;
             IncrementPhase();
         }
     }
@@ -81,6 +80,7 @@ public class Player : MonoBehaviour
         if (CanDeselect())
         {
             currentSelectedWorkerId = 0;
+            workers[currentSelectedWorkerId].IsSelected = false;
             DecrementPhase();
         }
     }
@@ -103,7 +103,7 @@ public class Player : MonoBehaviour
         if (CanBuild(currentSelectedWorkerId, coordinate))
         {
             MapManager.instance.PlaceBuilding(coordinate);
-
+            workers[currentSelectedWorkerId].IsSelected = false;
             IncrementPhase();
 
             TurnManager.instance.EndTurn();
