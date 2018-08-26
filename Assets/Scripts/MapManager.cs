@@ -67,6 +67,7 @@ public class MapManager : MonoBehaviour
         if (buildingMap[coordinate] == Building.NONE)
         {
             buildingMap[coordinate] = Building.ONE;
+            MapGrid.MapTiles[coordinate].currentBuilding = Building.ONE;
         }
         else
         {

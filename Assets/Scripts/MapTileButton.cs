@@ -54,9 +54,8 @@ public class MapTileButton : MonoBehaviour {
     {
         GameObject buildingCube = GameObject.CreatePrimitive(PrimitiveType.Cube);
         buildingCube.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
-        buildingCube.transform.localPosition = new Vector3(0f, buildingToYPosition[m_CurrentBuilding], 0f);
-
         buildingCube.transform.SetParent(transform);
+        buildingCube.transform.localPosition = new Vector3(0f, buildingToYPosition[m_CurrentBuilding], 0f);
     }
 
     private void CreateBuildingDome()

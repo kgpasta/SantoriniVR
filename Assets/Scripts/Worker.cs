@@ -13,7 +13,7 @@ public class Worker
         get { return m_CurrentCoordinate; }
         set {
             m_CurrentCoordinate = value;
-            m_WorkerModel.transform.position = new Vector3(value.x - 3, 0.25f, -value.y + 3);
+            m_WorkerModel.transform.position = new Vector3(value.x - 2, 0.25f, -value.y + 2);
             if (!m_WorkerModel.activeSelf)
             {
                 m_WorkerModel.SetActive(true);

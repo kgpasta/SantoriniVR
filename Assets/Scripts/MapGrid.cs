@@ -11,7 +11,7 @@ public class MapGrid : MonoBehaviour {
     {
         // Instantiate MapTileButton prefab
         GameObject mapTile = Instantiate(MapTileButtonPrefabReference);
-        mapTile.name = "Tile_" + (coordinate.x + 1).ToString() + "," + (coordinate.y + 1).ToString();
+        mapTile.name = "Tile_" + (coordinate.x).ToString() + "," + (coordinate.y).ToString();
 
         // Set Coordinate
         mapTile.GetComponent<MapTileButton>().coordinate = coordinate;
