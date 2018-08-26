@@ -39,7 +39,7 @@ public class MapManager : MonoBehaviour
             for (int j = 0; j < MAP_DIMENSION; j++)
             {
                 buildingMap.Add(new Coordinate(i, j), Building.NONE);
-                MapGrid.AddMapTile(new Coordinate(j, i));
+                MapGrid.AddMapTile(new Coordinate(i, j));
             }
         }
     }

@@ -24,7 +24,7 @@ public class MapTileButton : MonoBehaviour
         {Building.ONE, 0.15f },
         {Building.TWO, 0.45f },
         {Building.THREE, 0.75f },
-        {Building.ROOF, 1.15f }
+        {Building.ROOF, 0.9f }
     };
 
     public MapTileButton() { }
@@ -56,15 +56,15 @@ public class MapTileButton : MonoBehaviour
         GameObject buildingCube = GameObject.CreatePrimitive(PrimitiveType.Cube);
         buildingCube.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
         buildingCube.transform.SetParent(transform);
-        buildingCube.transform.localPosition = new Vector3(0f, 0f, -buildingToYPosition[m_CurrentBuilding]);
+        buildingCube.transform.localPosition = new Vector3(0f, 0f, buildingToYPosition[m_CurrentBuilding]);
     }
 
     private void CreateBuildingDome()
     {
         GameObject buildingDome = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        buildingDome.transform.localScale = new Vector3(0.25f, 0f, 0f);
         buildingDome.transform.SetParent(transform);
-        buildingDome.transform.localPosition = new Vector3(0f, 0f, -buildingToYPosition[m_CurrentBuilding]);
+        buildingDome.transform.localScale = new Vector3(2.8f, 0.3f, 2.8f);
+        buildingDome.transform.localPosition = new Vector3(0f, 0f, buildingToYPosition[m_CurrentBuilding]);
         buildingDome.GetComponent<Renderer>().material.color = Color.blue;
     }
 
