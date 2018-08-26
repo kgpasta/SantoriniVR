@@ -8,6 +8,8 @@ public class InputManager : MonoBehaviour
 
     private Player currentPlayer;
 
+    private int selectedWorker = 0;
+
     // Use this for initialization
     void Start()
     {
@@ -25,35 +27,23 @@ public class InputManager : MonoBehaviour
         string[] commands = input.Split(' ');
         Debug.Log(currentPlayer.playerId + ": " + commands[0]);
 
-        int workerId = Int32.Parse(commands[1]);
-
-        Coordinate coordinate = new Coordinate(Int32.Parse(commands[2]), Int32.Parse(commands[3]));
-
-        if (commands[0].ToLower() == "move")
+        if (commands[0].ToLower() == "select")
         {
-            if (currentPlayer.CanMove(workerId, coordinate))
-            {
-                currentPlayer.MoveBuilder(workerId, coordinate);
+            int workerId = Int32.Parse(commands[1]);
 
-            }
-            else
-            {
-                Debug.LogError("cannot move builder to: " + coordinate);
-            }
+            selectedWorker = workerId;
+            currentPlayer.SelectWorker(workerId);
         }
-        else if (commands[0].ToLower() == "build")
+        else if (commands[0].ToLower() == "deselect")
         {
-            if (currentPlayer.CanBuild(workerId, coordinate))
-            {
-                currentPlayer.PlaceBuilding(workerId, coordinate);
-            }
-            else
-            {
-                Debug.LogError("cannot build at: " + coordinate);
-            }
+            selectedWorker = 0;
+            currentPlayer.DeselectWorker();
         }
         else if (commands[0].ToLower() == "place")
         {
+            int workerId = Int32.Parse(commands[1]);
+            Coordinate coordinate = new Coordinate(Int32.Parse(commands[2]), Int32.Parse(commands[3]));
+
             if (currentPlayer.CanPlace(workerId, coordinate))
             {
                 currentPlayer.PlaceBuilder(workerId, coordinate);
@@ -61,6 +51,34 @@ public class InputManager : MonoBehaviour
             else
             {
                 Debug.LogError("cannot place worker at: " + coordinate);
+            }
+        }
+        else
+        {
+            Coordinate coordinate = new Coordinate(Int32.Parse(commands[1]), Int32.Parse(commands[2]));
+
+            if (commands[0].ToLower() == "move")
+            {
+                if (currentPlayer.CanMove(selectedWorker, coordinate))
+                {
+                    currentPlayer.MoveBuilder(coordinate);
+
+                }
+                else
+                {
+                    Debug.LogError("cannot move builder to: " + coordinate);
+                }
+            }
+            else if (commands[0].ToLower() == "build")
+            {
+                if (currentPlayer.CanBuild(selectedWorker, coordinate))
+                {
+                    currentPlayer.PlaceBuilding(coordinate);
+                }
+                else
+                {
+                    Debug.LogError("cannot build at: " + coordinate);
+                }
             }
         }
     }
@@ -79,5 +97,7 @@ public class InputManager : MonoBehaviour
         {
             Debug.LogError("player doesn't exist! " + args.player);
         }
+
+        selectedWorker = 0;
     }
 }

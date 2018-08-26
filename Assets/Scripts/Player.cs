@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     public GameObject WorkerModelPrefabReference = null;
 
     private Dictionary<int, Worker> workers = new Dictionary<int, Worker>();
+    private int currentSelectedWorkerId = 0;
     private int workersPlaced = 0;
 
     // Use this for initialization
@@ -22,6 +23,7 @@ public class Player : MonoBehaviour
     {
         TurnManager.instance.OnTurnStart += InitializeTurn;
 
+        phases.Add(Phase.SELECT);
         phases.Add(Phase.MOVE);
         phases.Add(Phase.BUILD);
 
@@ -63,11 +65,31 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void MoveBuilder(int workerId, Coordinate coordinate)
+    public void SelectWorker(int workerId)
     {
-        if (CanMove(workerId, coordinate))
+        if (CanSelect())
         {
-            Worker worker = workers[workerId];
+
+            currentSelectedWorkerId = workerId;
+
+            IncrementPhase();
+        }
+    }
+
+    public void DeselectWorker()
+    {
+        if (CanDeselect())
+        {
+            currentSelectedWorkerId = 0;
+            DecrementPhase();
+        }
+    }
+
+    public void MoveBuilder(Coordinate coordinate)
+    {
+        if (CanMove(currentSelectedWorkerId, coordinate))
+        {
+            Worker worker = workers[currentSelectedWorkerId];
 
             MapManager.instance.MoveWorker(worker, coordinate);
             worker.currentCoordinate = coordinate;
@@ -76,9 +98,9 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void PlaceBuilding(int workerId, Coordinate coordinate)
+    public void PlaceBuilding(Coordinate coordinate)
     {
-        if (CanBuild(workerId, coordinate))
+        if (CanBuild(currentSelectedWorkerId, coordinate))
         {
             MapManager.instance.PlaceBuilding(coordinate);
 
@@ -94,14 +116,32 @@ public class Player : MonoBehaviour
         return MapManager.instance.isEmpty(coordinate) && worker.currentCoordinate == null;
     }
 
+    public bool CanSelect()
+    {
+        return currentPhase.Equals(Phase.SELECT);
+    }
+
+    public bool CanDeselect()
+    {
+        return currentPhase.Equals(Phase.MOVE);
+    }
+
     public bool CanMove(int workerId, Coordinate coordinate)
     {
+        if (!workers.ContainsKey(workerId))
+        {
+            return false;
+        }
         Worker worker = workers[workerId];
         return worker.currentCoordinate.IsAdjacent(coordinate) && MapManager.instance.isEmpty(coordinate) && currentPhase.Equals(Phase.MOVE);
     }
 
     public bool CanBuild(int workerId, Coordinate coordinate)
     {
+        if (!workers.ContainsKey(workerId))
+        {
+            return false;
+        }
         Worker worker = workers[workerId];
         return worker.currentCoordinate.IsAdjacent(coordinate) && MapManager.instance.CanBuild(coordinate) && currentPhase.Equals(Phase.BUILD);
     }
@@ -121,5 +161,19 @@ public class Player : MonoBehaviour
 
     }
 
+    private void DecrementPhase()
+    {
+        phaseIndex--;
+        if (phaseIndex >= 0)
+        {
+            currentPhase = phases[phaseIndex];
+        }
+        else
+        {
+            phaseIndex = 1;
+            currentPhase = Phase.SELECT;
+        }
+
+    }
 
 }
