@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class InputManager : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class InputManager : MonoBehaviour
     void Start()
     {
         TurnManager.instance.OnTurnStart += UpdateCurrentPlayer;
+        MapManager.instance.MapGrid.OnMapTileButtonPressed += MapGrid_OnMapTileButtonPressed;
     }
 
     // Update is called once per frame
@@ -99,5 +101,32 @@ public class InputManager : MonoBehaviour
         }
 
         selectedWorker = 0;
+    }
+
+    private void MapGrid_OnMapTileButtonPressed(object sender, MapGrid.MapGridEventArgs e)
+    {
+        switch (currentPlayer.currentPhase)
+        {
+            // First stage of the game; placing workers
+            case Phase.WAITING:
+
+                // NOTE: Instead of specifying which worker you place at the beginning, just always first place worker 1 then worker 2
+                //       This way we dont have to pass workerId, since we can't select the worker at the beginning.
+                //
+                //       Also need access to what the currently selected worker is in here.. didn't see how you did that yet
+                break;
+
+            case Phase.BUILD:
+
+                break;
+
+            case Phase.MOVE:
+
+                break;
+
+            default:
+
+                break;
+        }
     }
 }

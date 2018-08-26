@@ -8,7 +8,7 @@ public class StraightTaperedPointerRenderer : MonoBehaviour {
     private const float POINTER_LENGTH = 0.25f;
     private const float POINTER_WIDTH = 0.0032f;
     private const string PIX_GREEN_HEX = "00D355";
-    private const string DARK_AQUA_GREEN = "008E4E";
+    private const string WHITE = "FFFFFF";
 
     private Color m_LineColor;
     public Color LineColor
@@ -66,7 +66,7 @@ public class StraightTaperedPointerRenderer : MonoBehaviour {
 
         // Set Material and Color Gradient
         m_PointerLineRenderer.material = new Material(Shader.Find("Sprites/Default"));
-        ColorUtility.TryParseHtmlString(DARK_AQUA_GREEN, out m_LineColor);
+        ColorUtility.TryParseHtmlString(WHITE, out m_LineColor);
         UpdateLineColorGradient();
 
         // Set Length and Width of Pointer
