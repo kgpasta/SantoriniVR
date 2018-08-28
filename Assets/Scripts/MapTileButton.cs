@@ -5,11 +5,10 @@ using UnityEngine;
 
 public class MapTileButton : MonoBehaviour
 {
-
-    public Coordinate coordinate { get; set; }
+    public Coordinate Coordinate { get; set; }
 
     private Building m_CurrentBuilding;
-    public Building currentBuilding
+    public Building CurrentBuilding
     {
         get { return m_CurrentBuilding; }
         set

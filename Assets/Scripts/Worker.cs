@@ -5,12 +5,11 @@ using UnityEngine;
 
 public class Worker
 {
-    public int workerId { get; set; }
-
-    public int playerId { get; set; }
+    public int WorkerId { get; set; }
+    public int PlayerId { get; set; }
 
     private Coordinate m_CurrentCoordinate;
-    public Coordinate currentCoordinate
+    public Coordinate CurrentCoordinate
     {
         get { return m_CurrentCoordinate; }
         set
@@ -36,7 +35,7 @@ public class Worker
     }
 
     private GameObject m_WorkerModel;
-    public GameObject workerModel
+    public GameObject WorkerModel
     {
         get { return m_WorkerModel; }
     }
@@ -51,12 +50,12 @@ public class Worker
 
     public Worker() { }
 
-    public Worker(GameObject modelPrefab, int playerId, Transform parentTransform)
+    public Worker(GameObject modelPrefab, int playerId, Transform parentTransform, int workerId)
     {
-        this.playerId = playerId;
+        this.PlayerId = playerId;
         m_WorkerModel = GameObject.Instantiate(modelPrefab);
         m_WorkerModel.transform.SetParent(parentTransform);
-        m_WorkerModel.name = "Worker";
+        m_WorkerModel.name = "Worker" + workerId.ToString();
 
         m_WorkerModel.GetComponent<Renderer>().material.color = playerIdToColor[playerId];
     }

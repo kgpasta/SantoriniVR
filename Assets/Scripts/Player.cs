@@ -6,29 +6,32 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [Header("Player Properties")]
-    public int playerId = 1;
-    public List<Phase> phases = new List<Phase>();
-    public Phase currentPhase = Phase.WAITING;
-    public int phaseIndex = 0;
+    public int PlayerId = 1;
+    public List<Phase> Phases = new List<Phase>();
+    public Phase CurrentPhase = Phase.WAITING;
+    public int PhaseIndex = 0;
 
     [Header("Model Prefab References")]
     public GameObject WorkerModelPrefabReference = null;
 
-    private Dictionary<int, Worker> workers = new Dictionary<int, Worker>();
-    private int currentSelectedWorkerId = 0;
-    private int workersPlaced = 0;
+    public int WorkersPlaced { get { return m_WorkersPlaced; } }
+    public int CurrentlySelectedWorkerId { get { return m_CurrentSelectedWorkerId; } }
+
+    private Dictionary<int, Worker> m_Workers = new Dictionary<int, Worker>();
+    private int m_CurrentSelectedWorkerId = 0;
+    private int m_WorkersPlaced = 0;
 
     // Use this for initialization
     void Start()
     {
         TurnManager.instance.OnTurnStart += InitializeTurn;
 
-        phases.Add(Phase.SELECT);
-        phases.Add(Phase.MOVE);
-        phases.Add(Phase.BUILD);
+        Phases.Add(Phase.SELECT);
+        Phases.Add(Phase.MOVE);
+        Phases.Add(Phase.BUILD);
 
-        workers.Add(1, new Worker(WorkerModelPrefabReference, playerId, transform));
-        workers.Add(2, new Worker(WorkerModelPrefabReference, playerId, transform));
+        m_Workers.Add(1, new Worker(WorkerModelPrefabReference, PlayerId, transform, 1));
+        m_Workers.Add(2, new Worker(WorkerModelPrefabReference, PlayerId, transform, 2));
     }
 
     // Update is called once per frame
@@ -39,29 +42,27 @@ public class Player : MonoBehaviour
 
     private void InitializeTurn(object sender, TurnManager.TurnEventArgs args)
     {
-        if (args.player == playerId && args.turnNumber != 0)
+        if (args.player == PlayerId && args.turnNumber != 0)
         {
-            currentPhase = phases[phaseIndex];
+            CurrentPhase = Phases[PhaseIndex];
         }
     }
 
     public void PlaceBuilder(int workerId, Coordinate coordinate)
     {
-
         if (CanPlace(workerId, coordinate))
         {
-            Worker worker = workers[workerId];
+            Worker worker = m_Workers[workerId];
 
             MapManager.instance.MoveWorker(worker, coordinate);
-            worker.currentCoordinate = coordinate;
+            worker.CurrentCoordinate = coordinate;
 
-            workersPlaced++;
+            m_WorkersPlaced++;
 
-            if (workersPlaced == workers.Count)
+            if (m_WorkersPlaced == m_Workers.Count)
             {
                 TurnManager.instance.EndTurn();
             }
-
         }
     }
 
@@ -69,8 +70,8 @@ public class Player : MonoBehaviour
     {
         if (CanSelect())
         {
-            currentSelectedWorkerId = workerId;
-            workers[currentSelectedWorkerId].IsSelected = true;
+            m_CurrentSelectedWorkerId = workerId;
+            m_Workers[m_CurrentSelectedWorkerId].IsSelected = true;
             IncrementPhase();
         }
     }
@@ -79,20 +80,20 @@ public class Player : MonoBehaviour
     {
         if (CanDeselect())
         {
-            currentSelectedWorkerId = 0;
-            workers[currentSelectedWorkerId].IsSelected = false;
+            m_CurrentSelectedWorkerId = 0;
+            m_Workers[m_CurrentSelectedWorkerId].IsSelected = false;
             DecrementPhase();
         }
     }
 
     public void MoveBuilder(Coordinate coordinate)
     {
-        if (CanMove(currentSelectedWorkerId, coordinate))
+        if (CanMove(m_CurrentSelectedWorkerId, coordinate))
         {
-            Worker worker = workers[currentSelectedWorkerId];
+            Worker worker = m_Workers[m_CurrentSelectedWorkerId];
 
             MapManager.instance.MoveWorker(worker, coordinate);
-            worker.currentCoordinate = coordinate;
+            worker.CurrentCoordinate = coordinate;
 
             IncrementPhase();
         }
@@ -100,10 +101,10 @@ public class Player : MonoBehaviour
 
     public void PlaceBuilding(Coordinate coordinate)
     {
-        if (CanBuild(currentSelectedWorkerId, coordinate))
+        if (CanBuild(m_CurrentSelectedWorkerId, coordinate))
         {
             MapManager.instance.PlaceBuilding(coordinate);
-            workers[currentSelectedWorkerId].IsSelected = false;
+            m_Workers[m_CurrentSelectedWorkerId].IsSelected = false;
             IncrementPhase();
 
             TurnManager.instance.EndTurn();
@@ -112,66 +113,66 @@ public class Player : MonoBehaviour
 
     public bool CanPlace(int workerId, Coordinate coordinate)
     {
-        Worker worker = workers[workerId];
-        return MapManager.instance.isEmpty(coordinate) && worker.currentCoordinate == null;
+        Worker worker = m_Workers[workerId];
+        return MapManager.instance.isEmpty(coordinate) && worker.CurrentCoordinate == null;
     }
 
     public bool CanSelect()
     {
-        return currentPhase.Equals(Phase.SELECT);
+        return CurrentPhase.Equals(Phase.SELECT);
     }
 
     public bool CanDeselect()
     {
-        return currentPhase.Equals(Phase.MOVE);
+        return CurrentPhase.Equals(Phase.MOVE);
     }
 
     public bool CanMove(int workerId, Coordinate coordinate)
     {
-        if (!workers.ContainsKey(workerId))
+        if (!m_Workers.ContainsKey(workerId))
         {
             return false;
         }
-        Worker worker = workers[workerId];
-        return worker.currentCoordinate.IsAdjacent(coordinate) && MapManager.instance.isEmpty(coordinate) && currentPhase.Equals(Phase.MOVE);
+        Worker worker = m_Workers[workerId];
+        return worker.CurrentCoordinate.IsAdjacent(coordinate) && MapManager.instance.isEmpty(coordinate) && CurrentPhase.Equals(Phase.MOVE);
     }
 
     public bool CanBuild(int workerId, Coordinate coordinate)
     {
-        if (!workers.ContainsKey(workerId))
+        if (!m_Workers.ContainsKey(workerId))
         {
             return false;
         }
-        Worker worker = workers[workerId];
-        return worker.currentCoordinate.IsAdjacent(coordinate) && MapManager.instance.CanBuild(coordinate) && currentPhase.Equals(Phase.BUILD);
+        Worker worker = m_Workers[workerId];
+        return worker.CurrentCoordinate.IsAdjacent(coordinate) && MapManager.instance.CanBuild(coordinate) && CurrentPhase.Equals(Phase.BUILD);
     }
 
     private void IncrementPhase()
     {
-        phaseIndex++;
-        if (phases.Count > phaseIndex)
+        PhaseIndex++;
+        if (Phases.Count > PhaseIndex)
         {
-            currentPhase = phases[phaseIndex];
+            CurrentPhase = Phases[PhaseIndex];
         }
         else
         {
-            phaseIndex = 0;
-            currentPhase = Phase.WAITING;
+            PhaseIndex = 0;
+            CurrentPhase = Phase.WAITING;
         }
 
     }
 
     private void DecrementPhase()
     {
-        phaseIndex--;
-        if (phaseIndex >= 0)
+        PhaseIndex--;
+        if (PhaseIndex >= 0)
         {
-            currentPhase = phases[phaseIndex];
+            CurrentPhase = Phases[PhaseIndex];
         }
         else
         {
-            phaseIndex = 1;
-            currentPhase = Phase.SELECT;
+            PhaseIndex = 1;
+            CurrentPhase = Phase.SELECT;
         }
 
     }

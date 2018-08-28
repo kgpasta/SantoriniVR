@@ -23,7 +23,7 @@ public class StraightTaperedPointerRenderer : MonoBehaviour {
         }
     }
 
-    private bool m_Visibilty = false;
+    private bool m_Visibilty = true;
     public bool Visibilty
     {
         get { return m_Visibilty; }
@@ -72,6 +72,9 @@ public class StraightTaperedPointerRenderer : MonoBehaviour {
         // Set Length and Width of Pointer
         m_PointerLineRenderer.startWidth = POINTER_WIDTH;
         m_PointerLineRenderer.endWidth = POINTER_WIDTH;
+
+        // Turn on renderer
+        m_PointerLineRenderer.enabled = true;
     }
 
     private void UpdateLineColorGradient()

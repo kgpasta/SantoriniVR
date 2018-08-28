@@ -9,8 +9,8 @@ public class MapManager : MonoBehaviour
 
     public static MapManager instance = null;
 
-    private Dictionary<Coordinate, Worker> workerMap = new Dictionary<Coordinate, Worker>();
-    private Dictionary<Coordinate, Building?> buildingMap = new Dictionary<Coordinate, Building?>();
+    private Dictionary<Coordinate, Worker> m_WorkerMap = new Dictionary<Coordinate, Worker>();
+    private Dictionary<Coordinate, Building?> m_BuildingMap = new Dictionary<Coordinate, Building?>();
 
     private const int MAP_DIMENSION = 5;
 
@@ -38,7 +38,7 @@ public class MapManager : MonoBehaviour
         {
             for (int j = 0; j < MAP_DIMENSION; j++)
             {
-                buildingMap.Add(new Coordinate(i, j), Building.NONE);
+                m_BuildingMap.Add(new Coordinate(i, j), Building.NONE);
                 MapGrid.AddMapTile(new Coordinate(i, j));
             }
         }
@@ -52,14 +52,14 @@ public class MapManager : MonoBehaviour
 
     public Boolean isEmpty(Coordinate coordinate)
     {
-        return !workerMap.ContainsKey(coordinate);
+        return !m_WorkerMap.ContainsKey(coordinate);
     }
 
     public int GetWorker(Coordinate coordinate)
     {
-        if (workerMap.ContainsKey(coordinate))
+        if (m_WorkerMap.ContainsKey(coordinate))
         {
-            return workerMap[coordinate].workerId;
+            return m_WorkerMap[coordinate].WorkerId;
         }
 
         return 0;
@@ -67,33 +67,33 @@ public class MapManager : MonoBehaviour
 
     public void MoveWorker(Worker worker, Coordinate coordinate)
     {
-        workerMap.Remove(coordinate);
+        m_WorkerMap.Remove(coordinate);
 
-        workerMap[coordinate] = worker;
+        m_WorkerMap[coordinate] = worker;
     }
 
     public void PlaceBuilding(Coordinate coordinate)
     {
-        if (buildingMap[coordinate] == Building.NONE)
+        if (m_BuildingMap[coordinate] == Building.NONE)
         {
-            buildingMap[coordinate] = Building.ONE;
-            MapGrid.MapTiles[coordinate].currentBuilding = Building.ONE;
+            m_BuildingMap[coordinate] = Building.ONE;
+            MapGrid.MapTiles[coordinate].CurrentBuilding = Building.ONE;
         }
         else
         {
-            Building nextBuilding = BuildingUtils.NextBuilding(buildingMap[coordinate]);
-            buildingMap[coordinate] = nextBuilding;
-            MapGrid.MapTiles[coordinate].currentBuilding = nextBuilding;
+            Building nextBuilding = BuildingUtils.NextBuilding(m_BuildingMap[coordinate]);
+            m_BuildingMap[coordinate] = nextBuilding;
+            MapGrid.MapTiles[coordinate].CurrentBuilding = nextBuilding;
         }
     }
 
     public Boolean CanBuild(Coordinate coordinate)
     {
-        return buildingMap[coordinate] != Building.ROOF;
+        return m_BuildingMap[coordinate] != Building.ROOF;
     }
 
     public Boolean CanSelect(int playerId, Coordinate coordinate)
     {
-        return !isEmpty(coordinate) && workerMap[coordinate].playerId == playerId;
+        return !isEmpty(coordinate) && m_WorkerMap[coordinate].PlayerId == playerId;
     }
 }

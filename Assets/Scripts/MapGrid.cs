@@ -45,13 +45,13 @@ public class MapGrid : MonoBehaviour {
         mapTile.name = "Tile_" + (coordinate.x).ToString() + "," + (coordinate.y).ToString();
 
         // Set Coordinate
-        mapTile.GetComponent<MapTileButton>().coordinate = coordinate;
+        mapTile.GetComponent<MapTileButton>().Coordinate = coordinate;
 
         // Set prefab instance's parent to this transform
         mapTile.transform.SetParent(transform);
 
         // Set Button On Click Listener
-        mapTile.GetComponent<Button>().onClick.AddListener(delegate { MapTileButtonOnClick(mapTile.GetComponent<MapTileButton>().coordinate); });
+        mapTile.GetComponent<Button>().onClick.AddListener(delegate { MapTileButtonOnClick(mapTile.GetComponent<MapTileButton>().Coordinate); });
 
         // Adjust rotation and scale
         RectTransform mapTileRectTransform = mapTile.GetComponent<RectTransform>();

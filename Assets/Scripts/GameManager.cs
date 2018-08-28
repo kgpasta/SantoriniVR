@@ -6,7 +6,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;
-    private bool gameStarted = false;
+    private bool m_GameStarted = false;
 
     //Awake is always called before any Start functions
     void Awake()
@@ -34,10 +34,10 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!gameStarted)
+        if (!m_GameStarted)
         {
             TurnManager.instance.StartTurns();
-            gameStarted = true;
+            m_GameStarted = true;
         }
     }
 }
