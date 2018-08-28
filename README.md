@@ -8,7 +8,8 @@ Bugs:
 Todo:
 
 * Prashant
-	* Add InputManager logic to MapGrid_OnMapTileButtonPressed
+	* make worker objects climb levels
+	* implement vr input for select phase
 
 * Kaustubh
 	* dang
