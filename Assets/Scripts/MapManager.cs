@@ -67,7 +67,7 @@ public class MapManager : MonoBehaviour
 
     public void MoveWorker(Worker worker, Coordinate coordinate)
     {
-        m_WorkerMap.Remove(coordinate);
+        m_WorkerMap.Remove(worker.CurrentCoordinate);
 
         m_WorkerMap[coordinate] = worker;
     }

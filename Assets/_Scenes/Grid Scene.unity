@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -207,8 +207,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cfd81d9ef0c9bf4d9760982209b3add, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player1: {fileID: 666647139}
-  player2: {fileID: 1790747009}
+  Player1: {fileID: 666647139}
+  Player2: {fileID: 1790747009}
 --- !u!4 &318960002
 Transform:
   m_ObjectHideFlags: 0
@@ -311,10 +311,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 364ea52a0240e6b4695a0a327c0f6aff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerId: 1
-  phases: 
-  currentPhase: 2
-  phaseIndex: 0
+  PlayerId: 1
+  Phases: 
+  CurrentPhase: 3
+  PhaseIndex: 0
   WorkerModelPrefabReference: {fileID: 1845344804078004, guid: 1b34b46e646686846b15631eff9a1d8a,
     type: 2}
 --- !u!4 &666647140
@@ -663,10 +663,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 364ea52a0240e6b4695a0a327c0f6aff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerId: 2
-  phases: 
-  currentPhase: 2
-  phaseIndex: 0
+  PlayerId: 2
+  Phases: 
+  CurrentPhase: 3
+  PhaseIndex: 0
   WorkerModelPrefabReference: {fileID: 1845344804078004, guid: 1b34b46e646686846b15631eff9a1d8a,
     type: 2}
 --- !u!4 &1790747010
