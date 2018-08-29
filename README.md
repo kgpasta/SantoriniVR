@@ -12,7 +12,7 @@ Todo:
 	* implement vr input for select phase
 
 * Kaustubh
-	* dang
+	* start implementing god power framework
 
 
 
