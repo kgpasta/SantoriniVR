@@ -65,9 +65,9 @@ public class MapManager : MonoBehaviour
         return 0;
     }
 
-    public void MoveWorker(Worker worker, Coordinate coordinate)
+    public void MoveWorker(Worker worker, Coordinate coordinate, bool isPlacing = false)
     {
-        m_WorkerMap.Remove(worker.CurrentCoordinate);
+        if (!isPlacing) m_WorkerMap.Remove(worker.CurrentCoordinate);
 
         m_WorkerMap[coordinate] = worker;
     }

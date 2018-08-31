@@ -54,7 +54,7 @@ public class Player : MonoBehaviour
         {
             Worker worker = m_Workers[workerId];
 
-            MapManager.instance.MoveWorker(worker, coordinate);
+            MapManager.instance.MoveWorker(worker, coordinate, true);
             worker.CurrentCoordinate = coordinate;
 
             m_WorkersPlaced++;
